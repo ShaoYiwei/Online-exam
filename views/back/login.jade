@@ -1,0 +1,29 @@
+//
+   Created by HUI on 2016/11/13.
+
+extends ../common/layout
+
+block styles
+
+block content
+    ul.layui-nav
+        li.layui-nav-item 智能在线考试系统
+    .container.login_box
+        form.form-signin(role="form" action='/back/login' method='post')
+            h2.form-signin-heading 超级管理员登陆
+            input.form-control.login_input(type="text"  placeholder="账号" required="" autofocus="" name='username' id='username' value= username)
+            input.form-control.login_input(type="password" placeholder="密码" required="" autofocus="" name='password' id='password')
+            .checkbox
+                label(style="display: inline-block;margin-left: 15%;")
+                    input(type="checkbox" value="remember-me")
+                    span 记住密码
+            button.btn.btn-lg.btn-primary.btn-block.login_btn(type="submit") 登录
+            p.hidden#error #{error}
+
+block scripts
+    script.
+        $(document).ready(function () {
+            if($('#error').text()){
+                layer.tips($('#error').text(),$('#username'))
+            }
+        })

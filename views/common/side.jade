@@ -1,0 +1,25 @@
+//
+   Created by HUI on 2016/11/3.
+
+.side
+    ul.layui-nav.layui-nav-tree.layui-nav-side(style="top:55px")
+        li.layui-nav-item
+            a(href="javascript:;") 切换学科
+            dl.layui-nav-child
+                for item in subject
+                    dd
+                        a(href='/api/selectSubject?subject_default='+'#{item}')  #{item}
+        li.layui-nav-item(class=title=="录入题目" ? "layui-this" : "")
+            a(href='/home') 录入题目
+        li.layui-nav-item(class=title=="试题中心" ? "layui-this" : "")
+            a(href='/banks-list?page=1') 我的题库
+        li.layui-nav-item(class=title=="组卷中心" ? "layui-this" : "")
+            a(href='/make-paper') 智能组卷
+        li.layui-nav-item(class=title=="试卷中心" ? "layui-this" : "")
+            a(href='/paper-bank?page=1') 我的试卷
+        li.layui-nav-item(class=title=="公开题库" ? "layui-this" : "")
+            a(href='/public-bank?page=1') 公开题库
+        li.layui-nav-item(class=title == "导入CSV" ? "layui-this" : "")
+            a(href='/import') 导入/备份
+        li.layui-nav-item(class=title == "修改密码" ? "layui-this" : "")
+            a(href='/setpassword') 修改密码
