@@ -1,0 +1,107 @@
+extends ./home
+block admin-content
+    .layui-container
+        if userInfo
+            h1(style="text-align:center")  更新信息
+            form.layui-form.layui-form-pane(id='teacherform' action='/admin/updateteacher' method='post' style="width:30%;margin:0 auto")
+                .layui-form-item(pane)
+                    label.layui-form-label 用户名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="username|required" value=userInfo.username)
+                .layui-form-item(pane)
+                    label.layui-form-label 密码
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="密码" name='password' value=userInfo.password lay-verify="required|pass")
+                .layui-form-item(pane)
+                    label.layui-form-label 真实姓名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="真实姓名" name='name' value=userInfo.name lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 科目
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="学科,学科之间已英文逗号隔开" name='subject' value=userInfo.subject_name lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 备注
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="备注" name='remarks' value=userInfo.remarks lay-verify="required")
+                button.layui-btn(lay-submit="") 提交
+
+        else if(userModify)
+            h1(style="text-align:center") 更新信息
+            form.layui-form.layui-form-pane(id='teacherform' action='/admin/createteacher' method='post' style="width:30%;margin:0 auto")
+                .layui-form-item(pane)
+                    label.layui-form-label 用户名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="username|required" value=userModify.username)
+                .layui-form-item(pane)
+                    label.layui-form-label 密码
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="密码" name='password' value=userModify.password lay-verify="required|pass")
+                .layui-form-item(pane)
+                    label.layui-form-label 真实姓名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="真实姓名" name='name' value=userModify.name lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 科目
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="学科,学科之间已英文逗号隔开" name='subject' value=userModify.subject_name lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 备注
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="备注" name='remarks' value=userModify.remarks lay-verify="required")
+                button.layui-btn(lay-submit="") 提交
+                p.hidden#error #{error.message}
+
+        else if(user)
+            h1(style="text-align:center") 创建用户
+            form.layui-form.layui-form-pane(id='teacherform' action='/admin/createteacher' method='post' style="width:30%;margin:0 auto")
+                .layui-form-item(pane)
+                    label.layui-form-label 用户名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="username|required")
+                .layui-form-item(pane)
+                    label.layui-form-label 密码
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="密码" name='password' lay-verify="required|pass")
+                .layui-form-item(pane)
+                    label.layui-form-label 真实姓名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="真实姓名" name='name' lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 科目
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="学科,学科之间已英文逗号隔开" name='subject' lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 备注
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="备注" name='remarks' lay-verify="required")
+                button.layui-btn(lay-submit="") 提交
+                p.hidden#error #{error.message}
+
+        else
+            h1(style="text-align:center") 创建用户
+            form.layui-form.layui-form-pane(id='teacherform' action='/admin/createteacher' method='post' style="width:30%;margin:0 auto")
+                .layui-form-item(pane)
+                    label.layui-form-label 用户名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="username|required")
+                .layui-form-item(pane)
+                    label.layui-form-label 密码
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="密码" name='password' lay-verify="required|pass")
+                .layui-form-item(pane)
+                    label.layui-form-label 真实姓名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="真实姓名" name='name' lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 科目
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="学科,学科之间已英文逗号隔开" name='subject' lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 备注
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="备注" name='remarks' lay-verify="required")
+                button.layui-btn(lay-submit="") 提交
+
+block scripts
+    script(src='/javascripts/createUser.js')

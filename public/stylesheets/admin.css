@@ -1,0 +1,48 @@
+body{
+    background: #eeeeee;
+}
+.header{
+    height: 59px;
+    position: relative;
+    z-index: 1000;
+    background: #393D49;
+}
+.logo{
+    font-family: "Arial Black";
+    font-weight: 300;
+    font-size: 28px;
+    color: lightyellow;
+    position: absolute;
+    line-height: 59px;
+    left: 50px;
+}
+
+.header .layui-nav{
+    position: absolute;
+    right: 0;
+    top:0;
+    padding: 0;
+    background: none;
+}
+
+
+.layui-side{
+    top: 55px;
+}
+
+.layui-body{
+    top: 100px;
+    margin-left: 50px;
+}
+
+.layui-btn a{
+    color: white;
+}
+
+.layui-table-view{
+    width: 960px;
+}
+
+.hidden{
+    display:none;
+}

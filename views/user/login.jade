@@ -1,0 +1,29 @@
+extends ../common/layout
+
+block styles
+    link(rel='stylesheet', href='http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='../stylesheets/style.css')
+    link(rel='stylesheet', href='../stylesheets/login.css')
+
+block content
+    ul.layui-nav
+        li.layui-nav-item.logo-title 智能在线考试系统
+    .container.login_box
+        form.form-signin(role="form" action='/login' method='post')
+            h2.form-signin-heading 用户登录
+            input.form-control.login_input(type="text"  placeholder="账号" required="" autofocus="" name='username' id='username' value= username)
+            input.form-control.login_input(type="password" placeholder="密码" required="" autofocus="" name='password' id='password')
+            select.form-control.login_input(name="role")
+                    option(value=1) 学生
+                    option(value=2) 教师
+
+            button.btn.btn-lg.btn-primary.btn-block.login_btn(type="submit") 登录
+            p.hidden#error #{error}
+
+block scripts
+    script.
+        $(document).ready(function () {
+            if($('#error').text()){
+                layer.tips($('#error').text(),$('#password'))
+            }
+        })

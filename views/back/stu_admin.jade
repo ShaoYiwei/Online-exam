@@ -1,0 +1,22 @@
+extends ./home
+block admin-content
+    .layui-container
+        button.layui-btn.layui-btn-normal
+            a(href='/admin/createstu') 新增学生
+        table.layui-table.table(lay-data="{height:600,url:'/admin/stuinfo',page:true}" lay-filter="test" id="demo")
+            thead
+                tr
+                    th(lay-data="{field:'_id', width:160, sort: true, fixed: true}") ID
+                    th(lay-data="{field:'username', width:160}") 用户名
+                    th(lay-data="{field:'name', width:120, sort: true}") 真实姓名
+                    th(lay-data="{field:'sex', width:120, sort: true}") 性别
+                    th(lay-data="{field:'className', width:120, sort: true}") 班级
+                    th(lay-data="{field:'remarks', width:240, sort: true}") 备注
+                    th(lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}")
+        script(type="text/html" id="barDemo")
+            a.layui-btn.layui-btn-mini(lay-event='edit') 编辑
+            a.layui-btn.layui-btn-danger.layui-btn-mini(lay-event='del') 删除
+block scripts
+    script(src='/javascripts/stuadmin.js')
+
+

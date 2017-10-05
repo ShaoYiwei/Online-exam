@@ -1,0 +1,25 @@
+//
+   Created by HUI on 2016/11/13.
+extends ../common/layout
+
+block styles
+    link(rel='stylesheet', href='/stylesheets/admin.css')
+block content
+    .layui-header.header
+        .layui-main-my
+            .my-header
+                a.logo 在线考试系统
+                ul.layui-nav
+                    li.layui-nav-item
+                        a(href='/admin/logout') 退了
+    .layui-side.layui-bg-black
+        ul.layui-nav.layui-nav-tree
+            li.layui-nav-item(class=title=='教师管理'?"layui-this":"")
+                a(href='/admin/index') 教师管理
+            li.layui-nav-item(class=title=='学生管理'?"layui-this":"")
+                a(href='/admin/stuindex') 学生管理
+            span.layui-nav-bar(style='top: 22.5px; height: 0px; opacity: 0;')
+    .layui-body
+        block admin-content
+
+
