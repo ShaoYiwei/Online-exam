@@ -6,24 +6,10 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
     link(rel='stylesheet', href="/layui/css/layui.css")
     block styles
-    body
+  body
     block content
-    script(src='/javascripts/jquery-3.2.1.min.js')
-    script(src='/layui/layui.js')
-    script(src='/layui/lay/dest/layui.all.js')
-    script.
-            layui.use('util', function () {
-                var util = layui.util;
-                //使用内部工具组件
-                util.fixbar({
-                    bar1: true
-                    , click: function (type) {
-                        console.log(type);
-                        if (type === 'bar1') {
-                            layer.alert('点击了bar1')
-                        }
-                    }
-                })
-            });
-    block scripts
+  script(src='/layui/layui.js')
+  script(src='/javascripts/jquery-3.2.1.min.js')
+  block scripts
+
 

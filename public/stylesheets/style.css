@@ -1,8 +1,67 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.logo-title{
+    font-size: 28px;
+}
+.login_box{
+    margin: 0 auto;
+    margin-top: 11%;
+    width: 460px;
+    height: 317px;
+    background-color: rgba(255,255,255,0.5);
+}
+.form-signin-heading{
+    text-align: center;
+}
+.login_input{
+    margin: 20px auto;width: 70%;
+}
+.login_btn{
+    margin:0 auto;
+    display: block;
+    width: 40%;
+    background-color: #69ba62;
+    border-color: #69ba62;
+    transition: all 0.3s;
+}
+.login_btn:hover{
+    background-color: #B1D2EC;
+    border-color: #eeeeee;
+}
+.checkbox{
+    position: inherit;
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
-a {
-  color: #00B7FF;
+
+/*Global*/
+.header{
+    height: 50px;
+    line-height: 50px;
+    background-color: #ffffff;
+    border-bottom: 5px solid #69ba62;
+}
+
+.content{
+    position: relative;
+    padding-left:200px;
+    top:0;
+
+}
+.qt-delete{
+    position: absolute;
+    right: 25px;
+}
+.qt-detail{
+    position: absolute;
+    right: 125px;
+}
+.qt-edit{
+    position: absolute;
+    right: 75px;
+}
+.logout{
+    float: right;
+    position: relative;
+    right: 20px;
 }

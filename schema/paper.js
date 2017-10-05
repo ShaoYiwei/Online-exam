@@ -12,4 +12,3 @@ var PaperSchema = mongoose.Schema({
     date:Date,
     filename:String
 });
-mongoose.model('Paper', PaperSchema);

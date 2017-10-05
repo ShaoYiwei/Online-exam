@@ -5,14 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-
+var mongoose = require('./config/mongoose');
+var db = mongoose();
 var auth = require('./middlewares/auth');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin/admin')
 
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -34,7 +34,7 @@ app.use(session({
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/admin',auth.signinRequired,admin);
+app.use('/admin',auth.adminRequired,admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

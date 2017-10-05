@@ -15,5 +15,3 @@ var BankSchema = mongoose.Schema({
     answer:String,//答案
 });
 
-
-mongoose.model('Bank', BankSchema);
