@@ -1,3 +1,8 @@
+
+const mongoose = require('mongoose');
+const db = mongoose.connection;
+const Student = mongoose.model('Student');
+const Teacher = mongoose.model('Teacher');
 /**
  * 超级管理员登陆
  * @param req
@@ -44,11 +49,37 @@ exports.userLogin = function (req, res, next) {
         password: password,
         role: role
     };
-    if (username == 'admin' && password == '123456') {
-        req.session.user = user_session;
-        res.redirect('/admin');
-    }
-    else {
-        res.render('back/login', {username: username, error: '用户名或密码不正确'});
+
+    if(role === "student"){
+        Student.findOne({username:username,password:password},function (err,docs) {
+            if(err){
+                res.end(err);
+            }else{
+                if(!docs || docs.length == 0){
+                    res.render('user/login', {username: username, error: '用户名或密码错误'});
+                }else{
+                    user_session.name = docs.name;
+                    req.session.user = user_session;
+                    res.redirect('/student/index')
+                }
+            }
+        });
+    }else if(role=="teacher"){
+        Teacher.findOne({username:username,password:password},function (err,docs) {
+            if(err){
+                res.end(err);
+            }else{
+                if(!docs || docs.length == 0){
+                    res.render('user/login', {username: username, error: '用户名或密码错误'});
+                }else{
+                    user_session.subject = docs.subject;
+                    user_session.name = docs.name;
+                    req.session.user = user_session;
+                    res.redirect('/teacher/index')
+                }
+            }
+        });
+    }else{
+        res.render('user/login', {username: username, error: '未知错误'});
     }
 }

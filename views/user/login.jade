@@ -21,9 +21,4 @@ block content
             p.hidden#error #{error}
 
 block scripts
-    script.
-        $(document).ready(function () {
-            if($('#error').text()){
-                layer.tips($('#error').text(),$('#password'))
-            }
-        })
+    script(src='/javascripts/layer.js')

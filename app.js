@@ -10,7 +10,9 @@ var db = mongoose();
 var auth = require('./middlewares/auth');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var admin = require('./routes/admin/admin')
+var admin = require('./routes/admin/admin');
+var teacher = require('./routes/teacher/teacher');
+var student = require('./routes/student/student');
 
 var app = express();
 // view engine setup
@@ -32,9 +34,16 @@ app.use(session({
     saveUninitialized: true,
 }));
 
+app.use(function(req, res, next){
+    res.locals.session = req.session;
+    next();
+});
+
+//express总路由
 app.use('/', index);
-app.use('/users', users);
 app.use('/admin',auth.adminRequired,admin);
+app.use('/student',auth.studentRequired,student);
+app.use('/teacher',auth.teacherRequired,teacher);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

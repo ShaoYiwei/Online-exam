@@ -17,12 +17,20 @@ router.post('/admin/login',function (req, res, next) {
 });
 
 
-//普通用户登录
+//普通用户登录get
 router.get('/login',function (req, res, next) {
+    if(req.session.user) {
+        if(req.session.user.role == "student"){
+            res.redirect('/student/index');
+        }else if(req.session.user.role=="teacher"){
+            res.redirect('/teacher/index');
+        }
+    }
     res.render('user/login');
 });
 
-router.post('',function (req, res, next) {
-
+//普通用户登录post
+router.post('/login',function (req, res, next) {
+    loginController.userLogin(req,res,next);
 });
 module.exports = router;

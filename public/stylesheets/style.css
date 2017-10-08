@@ -65,3 +65,7 @@
     position: relative;
     right: 20px;
 }
+
+.hidden{
+    display: none;
+}

@@ -1,0 +1,43 @@
+//
+   Created by HUI on 2016/11/13.
+extends ../common/layout
+
+block styles
+    link(rel='stylesheet', href='/stylesheets/admin.css')
+block content
+    .layui-header.header
+        .layui-main-my
+            .my-header
+                a.logo 在线考试系统
+                ul.layui-nav
+                    li.layui-nav-item 欢迎您！#{ session.user.name }
+                    li.layui-nav-item
+                        a(href='/admin/logout') 退了
+    .layui-side.layui-bg-black
+        ul.layui-nav.layui-nav-tree.layui-nav-side(style="top:55px")
+            li.layui-nav-item.layui-nav-itemed
+                a(href="javascript:;") 切换学科
+                dl.layui-nav-child
+                    for item in session.user.subject
+                        dd
+                            a(href='/api/selectSubject?subject_default=' + '#{item}')  #{item}
+            li.layui-nav-item(class=title == "录入题目" ? "layui-this" : "")
+                a(href='/home') 录入题目
+            li.layui-nav-item(class=title == "试题中心" ? "layui-this" : "")
+                a(href='/banks-list?page=1') 我的题库
+            li.layui-nav-item(class=title == "组卷中心" ? "layui-this" : "")
+                a(href='/make-paper') 智能组卷
+            li.layui-nav-item(class=title == "试卷中心" ? "layui-this" : "")
+                a(href='/paper-bank?page=1') 我的试卷
+            li.layui-nav-item(class=title == "公开题库" ? "layui-this" : "")
+                a(href='/public-bank?page=1') 公开题库
+            li.layui-nav-item(class=title == "导入CSV" ? "layui-this" : "")
+                a(href='/import') 导入/备份
+            li.layui-nav-item(class=title == "修改密码" ? "layui-this" : "")
+                a(href='/setpassword') 修改密码
+    .layui-body
+        block teacher-content
+    block scripts
+        script(src='/javascripts/teacherindex.js')
+
+
