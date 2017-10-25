@@ -1,0 +1,47 @@
+extends ./home
+block admin-content
+    .layui-container
+        if(schoolModify)
+            blockquote.layui-elem-quote 更新信息
+            form.layui-form.layui-form-pane(id='teacherform' action='/rooter/updateschool' method='post' style="width:50%")
+                .layui-form-item(pane)
+                    label.layui-form-label 学校名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="学校名" name='name' lay-verify="required" value=schoolModify.name)
+                .layui-form-item(pane)
+                    label.layui-form-label 内容
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="内容" name='content' lay-verify="required" value=schoolModify.content)
+                .layui-form-item(pane)
+                    label.layui-form-label 备注
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="备注" name='remarks' lay-verify="required" value=schoolModify.remarks)
+                .layui-form-item
+                    .layui-input-block
+                        button.layui-btn(lay-submit="") 提交
+                if(error)
+                    p.hidden#error #{error.message}
+        else
+            blockquote.layui-elem-quote 创建信息
+            form.layui-form.layui-form-pane(id='teacherform' action='/rooter/addschool' method='post' style="width:40%")
+                .layui-form-item(pane)
+                    label.layui-form-label 学校名
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="学校名" name='name' lay-verify="required" id="schoolname")
+                .layui-form-item(pane)
+                    label.layui-form-label 内容
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="内容" name='content' lay-verify="required")
+                .layui-form-item(pane)
+                    label.layui-form-label 备注
+                    .layui-input-block
+                        input.layui-input(type="text" placeholder="备注" name='remarks' lay-verify="required")
+                .layui-form-item
+                    .layui-input-block
+                        button.layui-btn(lay-submit="") 提交
+                if(error)
+                    p.hidden#error #{error.message}
+
+block scripts
+    script(src='/js/admin/jquery-school-seletor.min.js')
+    script(src='/js/admin/school_op.js')

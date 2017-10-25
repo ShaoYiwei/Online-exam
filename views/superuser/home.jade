@@ -4,6 +4,7 @@ extends ../common/layout
 
 block styles
     link(rel='stylesheet', href='/css/admin.css')
+    link(rel='stylesheet', href='/css/jquery-school-seletor.min.css')
 block content
     .layui-header.header
         .layui-main-my
@@ -14,10 +15,10 @@ block content
                         a(href='/admin/logout') 退了
     .layui-side.layui-bg-black
         ul.layui-nav.layui-nav-tree
-            li.layui-nav-item(class=title=='教师管理'?"layui-this":"")
-                a(href='/admin/index') 教师管理
-            li.layui-nav-item(class=title=='学生管理'?"layui-this":"")
-                a(href='/admin/stuindex') 学生管理
+            li.layui-nav-item(class=title=='学校管理'?"layui-this":"")
+                a(href='/rooter/') 学校管理
+            li.layui-nav-item(class=title=='管理员管理'?"layui-this":"")
+                a(href='/rooter/admin') 管理员管理
             span.layui-nav-bar(style='top: 22.5px; height: 0px; opacity: 0;')
     .layui-body
         block admin-content

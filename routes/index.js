@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'hotdgo123222' });
 });
 
-//后台超管登录
+//后台管理员登录
 router.get('/admin/login',function (req, res, next) {
     res.render('back/login')
 });

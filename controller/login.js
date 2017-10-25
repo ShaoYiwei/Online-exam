@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const db = mongoose.connection;
 const Student = mongoose.model('Student');
 const Teacher = mongoose.model('Teacher');
+const Admin = mongoose.model('Admin');
 /**
  * 超级管理员登陆
  * @param req
@@ -19,10 +20,24 @@ exports.adminLogin = function (req, res, next) {
     };
     if (username == 'admin' && password == '123456') {
         req.session.user = user_session;
-        res.redirect('/admin/index');
+        res.redirect('/rooter/');
     }
     else {
-        res.render('back/login', {username: username, error: '用户名或密码不正确'});
+        Admin.findOne({username:username,password:password},function (err, doc) {
+
+            if(err){
+                res.error(err);
+            }else{
+                if(!doc){
+                    res.render('back/login', {username: username, error: '用户名或密码不正确'});
+                }else{
+                    user_session.role = 'schrooter';
+                    req.sessionStore.user = user_session;
+                    res.redirect('/admin/index');
+                }
+            }
+        });
+
     }
 }
 

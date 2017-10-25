@@ -8,6 +8,8 @@ module.exports = function () {
     require('../schema/user');
     require('../schema/teacher');
     require('../schema/student');
+    require('../schema/school');
+    require('../schema/admin');
     // require('../schema/bank');
     // require('../schema/paper');
     return db;

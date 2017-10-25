@@ -36,5 +36,5 @@ function delete_teacher(self,layer,index) {
         error: function () {
             layer.alert('你无权限删除此条题目')
         }
-    })
+    });
 }

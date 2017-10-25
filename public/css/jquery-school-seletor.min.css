@@ -1,0 +1,13 @@
+#m-proschool-layer{width:100%;position:absolute;top:0;left:0;z-index:6000;display:block;background:#000;background:rgba(0,0,0,.4)!important}
+#m-proschool{background:#fff;border-radius:3px;left:50%;margin-left:-325px;top:50%;margin-top:-190px;z-index:7000;font:12px "微软雅黑";display:none;position:absolute;width:620px;height:310px;border:1px solid #37bc9b}
+#m-proschool .title{width:100%;height:30px;color:#fff;line-height:30px;background-color:#37bc9b}
+#m-proschool .title span{margin-left:5px;text-align:center}
+#m-proschool .title #close{margin-right:5px;width:30px;float:right;cursor:pointer;font-size:21px;font-weight:700}
+#m-proschool .title #close:hover{margin-right:5px;float:right;width:30px;cursor:pointer;font-size:21px;font-weight:700;background-color:#ccc}
+#m-proschool .province{width:550px;height:22px;margin:10px 0 6px 15px}
+#m-proschool .province select{width:136px}
+#m-proschool .schools{width:580px;height:200px;margin-left:15px;overflow-y:auto;border:1px solid #37bc9b}
+#m-proschool .schools ul{width:510px}
+#m-proschool .schools ul li{list-style:none;float:left;width:158px;height:22px;margin-left:6px;padding-left:6px;line-height:22px;cursor:pointer}
+#m-proschool .schools ul li.DoubleWidthLi{width:328px}
+#m-proschool .schools ul li:hover{background:#37bc9b;color:#fff}

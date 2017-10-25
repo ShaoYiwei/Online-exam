@@ -10,6 +10,18 @@ exports.teacherRequired = function (req, res, next) {
     }
 }
 
+exports.schadminRequired = function (req, res, next) {
+    if (req.session.user && req.session.user.role) {
+        if (req.session.user.role == "schrooter") {
+            next();
+        }
+    } else {
+        res.redirect('/admin/login');
+        return;
+    }
+
+}
+
 /**
  *
  * 权限验证中间件

@@ -11,6 +11,7 @@ var auth = require('./middlewares/auth');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin/admin');
+var rooter = require('./routes/superuser/superuser');
 var teacher = require('./routes/teacher/teacher');
 var student = require('./routes/student/student');
 
@@ -41,7 +42,8 @@ app.use(function(req, res, next){
 
 //express总路由
 app.use('/', index);
-app.use('/admin',auth.adminRequired,admin);
+app.use('/rooter',auth.adminRequired,rooter);
+app.use('/admin',auth.schadminRequired,admin);
 app.use('/student',auth.studentRequired,student);
 app.use('/teacher',auth.teacherRequired,teacher);
 
