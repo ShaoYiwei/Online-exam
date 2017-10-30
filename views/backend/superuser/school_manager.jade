@@ -1,0 +1,21 @@
+extends home
+block admin-content
+    .continer
+        blockquote.layui-elem-quote.news_search
+            .layui-inline
+                .layui-input-inline
+                    input.layui-input.search_input(type='text', value='', placeholder='请输入关键字' id='name')
+                a.layui-btn.searchBtn 查询
+            .layui-inline
+                a.layui-btn.layui-btn-normal.addBtn(href='/rooter/addschool') 添加
+            .layui-inline
+                a.layui-btn.layui-btn-danger.batchDel 批量删除
+
+        table.layui-table.table(id='demo' lay-filter="test")
+        script(type="text/html" id="barDemo")
+            a.layui-btn.layui-btn-mini(lay-event='edit') 编辑
+            a.layui-btn.layui-btn-danger.layui-btn-mini(lay-event='del') 删除
+block scripts
+    script(src='/js/backend/superuser/school_manager.js')
+
+

@@ -4,7 +4,7 @@ var loginController = require('../controller/login')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'hotdgo123222' });
+  res.render('backend/index', { title: 'hotdgo123222' });
 });
 
 //后台管理员登录

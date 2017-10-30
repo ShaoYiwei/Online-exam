@@ -2,6 +2,7 @@ var Joi = require('joi');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 const School = mongoose.model('School');
+const path = 'backend/superuser/';
 
 /**
  * 学校信息
@@ -10,20 +11,21 @@ const School = mongoose.model('School');
  * @param next
  */
 exports.schoolInfo = function (req, res, next) {
-    let page=~~req.query.page;
-    let rows=~~req.query.limit;
-    let schoolname=req.query.name;
-    let query=School.find({});
-    query.skip((page-1)*rows);
+    let page = ~~req.query.page;
+    let rows = ~~req.query.limit;
+    let schoolname = req.query.name;
+    let query = School.find({});
+    query.skip((page - 1) * rows);
     query.limit(rows);
     query.where({
-        name:new RegExp(schoolname)
+        name: new RegExp(schoolname)
     })
     query.exec(function (err, result) {
-        if(err){
+        if (err) {
             res.end(err)
-        }else{
-            School.find({ name:new RegExp(schoolname)}, function (err, docs) {
+        } else {
+
+            School.find({name: new RegExp(schoolname)}, function (err, docs) {
                 res.json({
                     code: 0,
                     msg: "",
@@ -59,7 +61,7 @@ exports.createSchool = function (req, res, next) {
             let error = {};
             error.message = err.details[0].message;
             error.field = err.details[0].path;
-            res.render('superuser/school_op', {school: register_info, error: error});
+            res.render(path + 'school_op', {school: register_info, error: error});
         } else {
             School.find({name: register_info.name}, function (err, docs) {
                 if (err) {
@@ -71,11 +73,11 @@ exports.createSchool = function (req, res, next) {
                             if (err) {
                                 res.end(err);
                             } else {
-                                res.redirect('/rooter/')
+                                res.redirect('/rooter/school')
                             }
                         })
                     } else {
-                        res.render('superuser/school_op', { error: {message: '学校名已存在'},title:'学校管理'});
+                        res.render(path + 'school_op', {error: {message: '学校名已存在'}, title: '学校管理'});
                     }
                 }
             })
@@ -85,46 +87,64 @@ exports.createSchool = function (req, res, next) {
 
 
 exports.updateSchoolGet = function (req, res, next) {
-    School.find({_id: req.params.id}, function (err, docs) {
+    let id = req.params.id;
+    School.find({_id: id}, function (err, docs) {
         if (err) {
             res.end(err);
         }
-        res.render('superuser/school_op', {title: '学校管理', schoolModify: docs[0]});
+        res.render(path + 'school_op', {title: '学校管理', schoolModify: docs[0],id:id});
     });
 }
 
-exports.updateSchool = function (req, res, next) {
+exports.updateSchool =function (req, res, next) {
     let register_info = {};
     register_info.name = req.body.name;
     register_info.content = req.body.content;
     register_info.remarks = req.body.remarks;
-
+    let id = req.body.id
     let schema = Joi.object().keys({
         name: Joi.string().required(),
         remarks: Joi.string().required(),
         content: Joi.string().required(),
     });
 
-    Joi.validate(register_info, schema, function (err, value) {
+    Joi.validate(register_info, schema,async function (err, value,next) {
         if (err) {
             let error = {};
             error.message = err.details[0].message;
             error.field = err.details[0].path;
-            res.render('superuser/school_op', {schoolModify: register_info, error: error,title:'学校管理'});
+            res.render(path + 'school_op', {schoolModify: register_info, error: error, title: '学校管理',id:id});
         } else {
-            School.find({name: register_info.name}, function (err, doc) {
+
+            let schoolName;
+            await School.findOne({_id:id},function (err,doc) {
+                if(err){
+                    res.end(err);
+                }else{
+                    schoolName = doc.name;
+                }
+
+            });
+
+            School.findOne({name: register_info.name}, function (err, doc) {
                 if (err) {
                     res.end(err)
                 } else {
-                    School.update({username: register_info.username}, {
-                        $set: register_info
-                    }, function (err, next) {
-                        if (err) {
-                            res.end(err);
-                            return next();
-                        }
-                        res.redirect('/rooter/')
-                    })
+                    if(!doc || doc.name==schoolName){
+                        School.update({_id:id}, {
+                            $set: register_info
+                        }, function (err, doc) {
+                            if (err) {
+                                res.end(err);
+                            }
+                            res.redirect('/rooter/school')
+                        });
+                    }else{
+                        let error = {};
+                        error.message = '已存在学校';
+                        res.render(path + 'school_op', {schoolModify: register_info, error: error, title: '学校管理',id:id});
+                    }
+
                 }
             });
         }
@@ -132,19 +152,31 @@ exports.updateSchool = function (req, res, next) {
 }
 
 exports.delSchool = function (req, res, next) {
-    if (req.session.user.role === 'rooter') {
-        School.findOne({_id: req.body.id}, function (err, doc) {
-            if (err) {
-                res.end(err);
-                next();
-            } else {
-                doc.remove();
-                res.status(200).send(doc);
-            }
-        })
-    } else {
-        res.status(400).send({message: '权限不足'});
+    School.findOne({_id: req.body.id}, function (err, doc) {
+        if (err) {
+            res.end(err);
+            next();
+        } else {
+            doc.remove();
+            res.status(200).send(doc);
+        }
+    });
+}
+
+exports.delSelectSchool = function (req, res, next) {
+
+    let list = [];
+    for (let i = 0; i < req.body.length; i++) {
+        list.push(req.body[i]._id);
     }
+    School.remove({_id: {$in: list}}, function (err, doc) {
+        if (err) {
+            res.end(err);
+            next();
+        } else {
+            res.status(200).send(doc);
+        }
+    });
 }
 
 

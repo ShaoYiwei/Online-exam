@@ -1,0 +1,70 @@
+extends home
+block admin-content
+    if(adminModify)
+        blockquote.layui-elem-quote 更新信息
+            .layui-inline.left
+                a(href='/rooter/admin')
+                    i.layui-icon.layui-unselect.layui-tab-close &#x1006;
+        form.layui-form.layui-form-pane(id='teacherform' action='/rooter/updateadmin' method='post' style="width:40%")
+            .layui-form-item(pane)
+                label.layui-form-label 用户名
+                .layui-input-block
+                    input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="required" value=adminModify.username)
+            .layui-form-item(pane)
+                label.layui-form-label 密码
+                .layui-input-block
+                    input.layui-input(type="password" placeholder="密码" name='password' lay-verify="required|pass" value=adminModify.password)
+            .layui-form-item(pane)
+                label.layui-form-label 所属学校
+                .layui-input-block
+                    select(id="schoolselect" lay-search lay-verify="required" name="school")
+                        option(value="")
+                        if(schoolList)
+                            each school in schoolList
+                                if(error)
+                                    option(value=school._id selected='#{school._id}'== adminModify.school) #{school.name}
+                                else
+                                    option(value=school._id selected='#{school._id}'== adminModify.school._id ) #{school.name}
+            .layui-form-item
+                .layui-input-block
+                    button.layui-btn(lay-submit="") 提交
+            if(error)
+                p.hidden#error #{error.message}
+    else
+        blockquote.layui-elem-quote 创建信息
+            .layui-inline.left
+                a(href='/rooter/school')
+                    i.layui-icon.layui-unselect.layui-tab-close &#x1006;
+        form.layui-form.layui-form-pane(id='teacherform' action='/rooter/addadmin' method='post' style="width:40%")
+            .layui-form-item(pane)
+                label.layui-form-label 用户名
+                .layui-input-block
+                    input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="required|username" id="adminName")
+            .layui-form-item(pane)
+                label.layui-form-label 密码
+                .layui-input-block
+                    input.layui-input(type="password" placeholder="密码" name='password' lay-verify="required|pass" id="password")
+            .layui-form-item(pane)
+                label.layui-form-label 重复密码
+                .layui-input-block
+                    input.layui-input(type="password" placeholder="重复密码"  lay-verify="required|confirmPwd")
+            .layui-form-item(pane)
+                label.layui-form-label 所属学校
+                    .layui-input-block
+                .layui-input-block
+                    select(id="schoolselect" lay-search lay-verify="required" name="school")
+                        option(value="")
+                        if(schoolList)
+                            each school in schoolList
+                                option(value=school._id) #{school.name}
+
+            .layui-form-item
+                .layui-input-block
+                    button.layui-btn(lay-submit="") 提交
+            if(error)
+                p.hidden#error #{error.message}
+
+block scripts
+    script(src='/js/plugs/jquery-school-seletor.min.js')
+    script(src='/js/backend/superuser/admin_op.js')
+
