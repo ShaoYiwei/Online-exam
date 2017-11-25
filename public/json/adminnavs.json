@@ -1,0 +1,8 @@
+[{
+	"title" : "教师管理",
+	"spread" : false
+},{
+	"title" : "学生管理",
+	"href" : "/admin/student",
+	"spread" : false
+}]

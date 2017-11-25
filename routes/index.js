@@ -2,9 +2,15 @@ var express = require('express');
 var router = express.Router();
 var loginController = require('../controller/login')
 
+const mongoose = require('mongoose');
+const db = mongoose.connection;
+const Admin = mongoose.model('Admin');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('backend/index', { title: 'hotdgo123222' });
+    let path = process.cwd() + '\\uploads';
+    res.render('index', { title: '没有什么',message:path });
+
 });
 
 //后台管理员登录

@@ -4,6 +4,8 @@
     <option name="serverConfigurations">
       <list>
         <ServerConfiguration>
+          <option name="authenticationMechanism" value="SCRAM-SHA-1" />
+          <option name="password" value="123456" />
           <option name="serverUrls">
             <list>
               <option value="localhost:27017" />
@@ -12,6 +14,7 @@
           <option name="sshTunnelingConfiguration">
             <SshTunnelingConfiguration />
           </option>
+          <option name="username" value="admin" />
         </ServerConfiguration>
       </list>
     </option>

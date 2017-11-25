@@ -2,6 +2,7 @@ var Joi = require('joi');
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 const School = mongoose.model('School');
+const Admin = mongoose.model('Admin');
 const path = 'backend/superuser/';
 
 /**
@@ -151,16 +152,24 @@ exports.updateSchool =function (req, res, next) {
     });
 }
 
-exports.delSchool = function (req, res, next) {
-    School.findOne({_id: req.body.id}, function (err, doc) {
-        if (err) {
-            res.end(err);
-            next();
-        } else {
-            doc.remove();
-            res.status(200).send(doc);
+exports.delSchool =function (req, res, next) {
+
+
+    Admin.find({school:req.body.id},function (err, doc) {
+        if(doc.length > 0){
+           res.status(400).end();
+        }else{
+            School.findOne({_id: req.body.id}, function (err, doc) {
+                if (err) {
+                    res.end(err);
+                    next();
+                } else {
+                    doc.remove();
+                    res.status(200).send(doc);
+                }
+            });
         }
-    });
+    })
 }
 
 exports.delSelectSchool = function (req, res, next) {
@@ -174,7 +183,7 @@ exports.delSelectSchool = function (req, res, next) {
             res.end(err);
             next();
         } else {
-            res.status(200).send(doc);
+           return res.status(200).send(doc);
         }
     });
 }

@@ -24,16 +24,16 @@ exports.adminLogin = function (req, res, next) {
     }
     else {
         Admin.findOne({username:username,password:password},function (err, doc) {
-
             if(err){
-                res.error(err);
+                res.end(err);
             }else{
                 if(!doc){
                     res.render('back/login', {username: username, error: '用户名或密码不正确'});
                 }else{
                     user_session.role = 'schrooter';
-                    req.sessionStore.user = user_session;
-                    res.redirect('/admin/index');
+                    user_session.school = doc.school;
+                    req.session.user = user_session;
+                    res.redirect('/admin');
                 }
             }
         });
@@ -88,7 +88,10 @@ exports.userLogin = function (req, res, next) {
                     res.render('user/login', {username: username, error: '用户名或密码错误'});
                 }else{
                     user_session.subject = docs.subject;
+                    user_session.subject_default = docs.subject[0]
                     user_session.name = docs.name;
+                    user_session.school = docs.school_id;
+                    user_session.user_id = docs._id;
                     req.session.user = user_session;
                     res.redirect('/teacher/index')
                 }

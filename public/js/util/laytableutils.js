@@ -14,12 +14,18 @@ function delete_obj(self,layer,index,url,data) {
         contentType: 'application/json',
         beforeSend: function (a) {
         },
-        success: function (qd) {
+        success: function (result) {
             self.del(); //删除对应行（tr）的DOM结构
             layer.close(index);
         },
-        error: function () {
-            layer.alert('你无权限删除此条题目')
+        error: function (result) {
+            console.log(result)
+            if(result.status == 400){
+                layer.alert('存在该学校管理员')
+            }else{
+                layer.alert('你无权限删除此条题目')
+            }
+
         }
     });
 }

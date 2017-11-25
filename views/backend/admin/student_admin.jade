@@ -1,0 +1,29 @@
+extends home
+block admin-content
+    .continer
+        blockquote.layui-elem-quote.news_search
+            .layui-inline
+                .layui-input-inline
+                    input.layui-input.search_input(type='text', value='', placeholder='请输入关键字' id='name')
+                a.layui-btn.searchBtn 查询
+            .layui-inline
+                a.layui-btn.layui-btn-normal.addBtn(href='/admin/addteacher') 添加
+            .layui-inline
+                a.layui-btn.layui-btn-danger.batchDel 批量删除
+        table.layui-table.table(lay-data="{height:600,url:'/admin/stuinfo',page:true}" lay-filter="test" id="demo")
+            thead
+                tr
+                    th(lay-data="{field:'_id', width:160, sort: true, fixed: true}") ID
+                    th(lay-data="{field:'username', width:160}") 用户名
+                    th(lay-data="{field:'name', width:120, sort: true}") 真实姓名
+                    th(lay-data="{field:'sex', width:120, sort: true}") 性别
+                    th(lay-data="{field:'className', width:120, sort: true}") 班级
+                    th(lay-data="{field:'remarks', width:240, sort: true}") 备注
+                    th(lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}")
+        script(type="text/html" id="barDemo")
+            a.layui-btn.layui-btn-mini(lay-event='edit') 编辑
+            a.layui-btn.layui-btn-danger.layui-btn-mini(lay-event='del') 删除
+block scripts
+    script(src='/js/stuadmin.js')
+
+

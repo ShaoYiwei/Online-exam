@@ -1,8 +1,11 @@
 //-- 需要教师用户
 exports.teacherRequired = function (req, res, next) {
     if (req.session.user && req.session.user.role) {
-        if(req.session.user.role == "teacher"){
+        if(req.session.user.role === "teacher"){
             next();
+        }else{
+            res.redirect('/login');
+            return;
         }
     } else {
         res.redirect('/login');
@@ -12,8 +15,11 @@ exports.teacherRequired = function (req, res, next) {
 
 exports.schadminRequired = function (req, res, next) {
     if (req.session.user && req.session.user.role) {
-        if (req.session.user.role == "schrooter") {
+        if (req.session.user.role === "schrooter") {
             next();
+        }else{
+            res.redirect('/admin/login');
+            return;
         }
     } else {
         res.redirect('/admin/login');
@@ -29,8 +35,11 @@ exports.schadminRequired = function (req, res, next) {
 //--需要admin权限
 exports.adminRequired = function (req, res, next) {
     if (req.session.user && req.session.user.role) {
-        if (req.session.user.role == "rooter") {
+        if (req.session.user.role === "rooter") {
             next();
+        }else{
+            res.redirect('/admin/login');
+            return;
         }
     } else {
         res.redirect('/admin/login');
@@ -48,8 +57,11 @@ exports.adminRequired = function (req, res, next) {
 //-- 需要学生用户
 exports.studentRequired = function (req, res, next) {
     if (req.session.user && req.session.user.role) {
-        if(req.session.user.role == "student"){
+        if(req.session.user.role === "student"){
             next();
+        }else{
+            res.redirect('/login');
+            return;
         }
     } else {
         res.redirect('/login');

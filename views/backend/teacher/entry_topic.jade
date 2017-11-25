@@ -1,0 +1,78 @@
+extends home
+block admin-content
+    blockquote.layui-elem-quote.layui-quote-nm 出卷易-录入题目
+        form.layui-form.layui-form-pane(id="createItem" onsubmit='return false' enctype="multipart/form-data")
+            .layui-form-item
+                label.layui-form-label 科目
+                .layui-input-inline
+                    input.layui-input(id='subject' value= subject_default readonly='readonly')
+                label.layui-form-label 题型
+                .layui-input-inline
+                    select(id='type')
+                        if(qInfo)
+                            option(value="0" selected=qInfo.type === '选择题') 选择题
+                            option(value="1" selected=qInfo.type === '填空题') 填空题
+                            option(value="2" selected=qInfo.type === '判断题') 判断题
+                            option(value="3" selected=qInfo.type === '简答题') 简答题
+                            option(value="4" selected=qInfo.type === '解答题') 解答题
+                            option(value="5" selected=qInfo.type === '名词解释') 名词解释
+                        else
+                            option(value="0" selected) 选择题
+                            option(value="1") 填空题
+                            option(value="2") 判断题
+                            option(value="3") 简答题
+                            option(value="4") 解答题
+                            option(value="5") 名词解释
+
+                label.layui-form-label 知识点
+                .layui-input-inline
+                    input.layui-input(id='tips' value="#{qInfo ? qInfo.tips : ''}" )
+            .layui-form-item.layui-form-text
+                label.layui-form-label 题目
+                .layui-input-block
+                    textarea.layui-textarea(placeholder="请输入题目" id='question'  )  #{qInfo ? qInfo.question : ''}
+            .layui-form-item
+                fieldset.layui-elem-field.layui-field-title(style='margin-top: 30px;')
+                    legend 附件图片
+                .layui-upload
+                    button#testList.layui-btn.layui-btn-normal(type='button') 选择多文件
+                    .layui-upload-list
+                        table.layui-table
+                            thead
+                                tr
+                                    th 文件名
+                                    th 大小
+                                    th 状态
+                                    th 操作
+                            tbody#demoList
+                    button#testListAction.layui-btn(type='button') 开始上传
+
+            .layui-form-item.layui-form-text
+                label.layui-form-label 答案
+                .layui-input-block
+                    textarea.layui-textarea(placeholder="请输入答案" id='answer'  ) #{qInfo ? qInfo.answer : ''}
+            .layui-form-item
+                label.layui-form-label LEVEL
+                .layui-input-block
+                    if(qInfo)
+                        input(type="radio" name="level" title="容易" value="易"  checked=qInfo.level === '易')
+                        input(type="radio" name="level" title="普通" value="中"  checked=qInfo.level === '中')
+                        input(type="radio" name="level" title="困难" value="难"  checked=qInfo.level === '难')
+                    else
+                        input(type="radio" name="level" title="容易" value="易")
+                        input(type="radio" name="level" title="普通" value="中" checked='')
+                        input(type="radio" name="level" title="困难" value="难")
+            hr
+            .layui-form-item
+                label.layui-form-label 分享
+                .layui-input-block
+                    input(type="checkbox" name="public" lay-skin="switch" title="分享" id='isPublic' checked= qInfo ? qInfo.public : false )
+            hr
+            if qInfo
+                button.layui-btn.layui-btn-radius.layui-btn-normal(lay-submit lay-filter="formDemo" style="display:block;margin:0 auto" id='updateBtn' data="#{qInfo.id}")  更新保存
+            else
+                button.layui-btn.layui-btn-radius.layui-btn-normal(lay-submit lay-filter="formDemo" style="display:block;margin:0 auto" id='createBtn' )  提交保存
+            p.hidden#message #{message}
+
+block scripts
+    script(src='/js/backend/teacher/entrytopic.js')

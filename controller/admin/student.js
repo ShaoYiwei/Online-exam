@@ -2,6 +2,7 @@ var Joi = require('joi')
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 const Student = mongoose.model('Student');
+const path = 'backend/admin/';
 
 /**
  * 学生信息
@@ -41,7 +42,7 @@ exports.createstu = function (req, res, next) {
         name: Joi.string().required(),
         remarks: Joi.string().required(),
         className: Joi.string().required(),
-        sex:Joi.string().required()
+        sex: Joi.string().required()
     });
 
     Joi.validate(register_info, schema, function (err, value) {
@@ -49,7 +50,7 @@ exports.createstu = function (req, res, next) {
             let error = {};
             error.message = err.details[0].message;
             error.field = err.details[0].path;
-            res.render('back/stu_op', {user: register_info, error: error});
+            res.render(path + 'stu_op', {user: register_info, error: error});
         } else {
             Student.find({username: register_info.username}, function (err, docs) {
                 if (err) {
@@ -62,11 +63,11 @@ exports.createstu = function (req, res, next) {
                             if (err) {
                                 res.end(err);
                             } else {
-                                res.redirect('/admin/stuindex')
+                                res.redirect('/admin/student')
                             }
                         })
                     } else {
-                        res.render('back/stu_op', { error: {message: '用户名已被使用'},title:'教师管理'});
+                        res.render(path + 'stu_op', {error: {message: '用户名已被使用'}, title: '教师管理'});
                     }
                 }
             })
@@ -90,7 +91,7 @@ exports.updatestu = function (req, res, next) {
         name: Joi.string().required(),
         remarks: Joi.string().required(),
         className: Joi.string().required(),
-        sex:Joi.string().required()
+        sex: Joi.string().required()
     });
 
     Joi.validate(register_info, schema, function (err, value) {
@@ -98,7 +99,7 @@ exports.updatestu = function (req, res, next) {
             let error = {};
             error.message = err.details[0].message;
             error.field = err.details[0].path;
-            res.render('back/stu_op', {userModify: register_info, error: error,title:'学生管理'});
+            res.render(path + 'stu_op', {userModify: register_info, error: error, title: '学生管理'});
         } else {
             Student.find({username: register_info.username}, function (err, doc) {
                 if (err) {
@@ -111,7 +112,7 @@ exports.updatestu = function (req, res, next) {
                             res.end(err);
                             return next();
                         }
-                        res.redirect('/admin/stuindex')
+                        res.redirect('/admin/student')
                     })
                 }
             });
@@ -125,23 +126,19 @@ exports.updateStuGet = function (req, res, next) {
         if (err) {
             res.end(err);
         }
-        res.render('back/stu_op', {title: '学生管理', userModify: docs[0]});
+        res.render(path + 'stu_op', {title: '学生管理', userModify: docs[0]});
     });
 }
 
 
 exports.delStu = function (req, res, next) {
-    if (req.session.user.role === 'rooter') {
-        Student.findOne({_id: req.params.id}, function (err, doc) {
-            if (err) {
-                res.end('err', err);
-                next();
-            } else {
-                doc.remove();
-                res.status(200).send(doc);
-            }
-        })
-    } else {
-        res.status(400).send({message: '权限不足'});
-    }
+    Student.findOne({_id: req.params.id}, function (err, doc) {
+        if (err) {
+            res.end('err', err);
+            next();
+        } else {
+            doc.remove();
+            res.status(200).send(doc);
+        }
+    });
 }

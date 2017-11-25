@@ -181,3 +181,8 @@
 	.top_menu .layui-nav-item.showNotice[pc]{ display:none !important; }
 	.panel{ width:100%; }
 }
+
+
+.layui-input-block dd{
+	color: black;
+}

@@ -10,7 +10,10 @@ const School = mongoose.model('School');
 const path = 'backend/superuser/';
 
 router.get('/', function (req, res, next) {
-    res.render('backend/index', {title: '学校管理'});
+    res.render('backend/index', {title: '超级用户系统',user:{
+        name:'超级管理员',
+        flag:'rooter'
+    }});
 });
 
 /** 学校管理 **/

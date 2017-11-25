@@ -5,6 +5,7 @@ const School = mongoose.model('School');
 const Admin = mongoose.model('Admin');
 
 const path = 'backend/superuser/';
+const title = '管理员管理'
 
 /**
  * 添加管理员（Get）
@@ -98,7 +99,8 @@ exports.adminInfo = function (req, res, next) {
 
                     let data = result;
                     data.forEach(function (item) {
-                        item._doc.schoolName = item.school.name;
+                        if(item.school)
+                            item._doc.schoolName = item.school.name;
                     });
                     res.json({
                         code: 0,

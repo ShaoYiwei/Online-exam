@@ -9,7 +9,7 @@ block admin-content
             .layui-form-item(pane)
                 label.layui-form-label 用户名
                 .layui-input-block
-                    input.layui-input(type="text" placeholder="用户名" name='username' lay-verify="required" value=adminModify.username)
+                    input.layui-input.layui-disabled(type="text" placeholder="用户名" name='username' lay-verify="required" value=adminModify.username disabled)
             .layui-form-item(pane)
                 label.layui-form-label 密码
                 .layui-input-block
@@ -33,7 +33,7 @@ block admin-content
     else
         blockquote.layui-elem-quote 创建信息
             .layui-inline.left
-                a(href='/rooter/school')
+                a(href='/rooter/admin')
                     i.layui-icon.layui-unselect.layui-tab-close &#x1006;
         form.layui-form.layui-form-pane(id='teacherform' action='/rooter/addadmin' method='post' style="width:40%")
             .layui-form-item(pane)

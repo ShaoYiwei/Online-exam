@@ -1,0 +1,27 @@
+[
+  {
+    "title": "试题中心",
+    "href": "/rooter/admin",
+    "spread": false
+  },
+  {
+    "title": "录入题目",
+    "href": "/teacher/entrytopic",
+    "spread": false
+  },
+  {
+    "title": "组卷中心",
+    "href": "/teacher/makepaper",
+    "spread": false
+  },
+  {
+    "title": "试卷中心",
+    "href": "/teacher/paperlist",
+    "spread": false
+  },
+  {
+    "title": "公开题库",
+    "href": "/teacher/publicbank",
+    "spread": false
+  }
+]

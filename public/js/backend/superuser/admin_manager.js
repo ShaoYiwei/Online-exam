@@ -9,6 +9,7 @@ layui.use(['layer', 'table'], function () {
         ,url: '/rooter/admininfo'
         ,checkbox:true
         ,page:true
+        ,id:'idTest'
         ,cols: [[
             {checkbox:true, fixed: true},
             {field:'_id', width:240,title:'ID'},

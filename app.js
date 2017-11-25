@@ -1,11 +1,15 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var mongoose = require('./config/mongoose');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const mongoose = require('./config/mongoose');
+
+const multipart = require('connect-multiparty');
+const multipartMiddleware = multipart();
+
 var db = mongoose();
 var auth = require('./middlewares/auth');
 var index = require('./routes/index');
@@ -14,6 +18,8 @@ var admin = require('./routes/admin/admin');
 var rooter = require('./routes/superuser/superuser');
 var teacher = require('./routes/teacher/teacher');
 var student = require('./routes/student/student');
+
+
 
 var app = express();
 // view engine setup
@@ -29,7 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: '123456',
-    name: 'onlineExam',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
+    name: 'examOnlie',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
     cookie: {maxAge: 365 * 24 * 60 * 60 * 1000},  //设置maxAge是ms，session和相应的cookie失效过期
     resave: false,
     saveUninitialized: true,

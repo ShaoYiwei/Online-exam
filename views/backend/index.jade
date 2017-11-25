@@ -25,7 +25,26 @@ html
                     .weather(pc='')
                         #tp-weather-widget
                         script.
-                            (function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))
+                            (function (T, h, i, n, k, P, a, g, e) {
+                                g = function () {
+                                    P = h.createElement(i);
+                                    a = h.getElementsByTagName(i)[0];
+                                    P.src = k;
+                                    P.charset = "utf-8";
+                                    P.async = 1;
+                                    a.parentNode.insertBefore(P, a)
+                                };
+                                T["ThinkPageWeatherWidgetObject"] = n;
+                                T[n] || (T[n] = function () {
+                                    (T[n].q = T[n].q || []).push(arguments)
+                                });
+                                T[n].l = +new Date();
+                                if (T.attachEvent) {
+                                    T.attachEvent("onload", g)
+                                } else {
+                                    T.addEventListener("load", g, false)
+                                }
+                            }(window, document, "script", "tpwidget", "//widget.seniverse.com/widget/chameleon.js"))
                         script.
                             tpwidget("init", {
                                 "flavor": "slim",
@@ -44,6 +63,10 @@ html
                             tpwidget("show");
                     // 顶部右侧菜单
                     ul.layui-nav.top_menu
+                        if(user.flag === 'admin')
+                            li.layui-nav-item
+                                a(href='javascript:;')
+                                    cite #{user.school}
                         li#showNotice.layui-nav-item.showNotice(pc='')
                             a(href='javascript:;')
                                 i.iconfont.icon-gonggao
@@ -59,7 +82,7 @@ html
                         li.layui-nav-item(pc='')
                             a(href='javascript:;')
                                 img.layui-circle(src='/images/default.png', width='35', height='35')
-                                cite 超级管理员
+                                cite #{user.name}
                             dl.layui-nav-child
                                 dd
                                     a(href='javascript:;', data-url='page/user/userInfo.html')
@@ -69,9 +92,6 @@ html
                                     a(href='javascript:;', data-url='page/user/changePwd.html')
                                         i.iconfont.icon-shezhi1(data-icon='icon-shezhi1')
                                         cite 修改密码
-                                dd
-                                    a(href='javascript:;', data-url='page/user/changePwd.html')
-                                        cite 测试
                                 dd
                                     a.signOut(href='page/login/login.html')
                                         i.iconfont.icon-loginout
@@ -83,7 +103,7 @@ html
                         img(src='/images/default.png')
                     p
                         | 你好！
-                        span.userName 超级管理员
+                        span.userName #{user.name}
                         | , 欢迎登录
                 .navBar.layui-side-scroll
             // 右侧内容
@@ -92,8 +112,11 @@ html
                     ul#top_tabs.layui-tab-title.top_tab
                         li.layui-this(lay-id='')
                             i.iconfont.icon-computer
-                            cite 学校管理
-                     ul.layui-nav.closeBox
+                            if(user.flag === 'rooter')
+                                cite 学校管理
+                            else if(user.flag === 'admin')
+                                cite 教师管理
+                    ul.layui-nav.closeBox
                         li.layui-nav-item
                             a(href='javascript:;')
                                 i.iconfont.icon-caozuo
@@ -113,7 +136,10 @@ html
                                         |  关闭全部
                     .layui-tab-content.clildFrame
                         .layui-tab-item.layui-show
-                            iframe(src='/rooter/school')
+                            if(user.flag == 'rooter')
+                                iframe(src='/rooter/school')
+                            else if(user.flag == 'admin')
+                                iframe(src='/admin/teacher')
             // 底部
             .layui-footer.footer
                 p
@@ -124,4 +150,7 @@ html
         .site-mobile-shade
         script(type='text/javascript', src='/layui/layui.js')
         script(type='text/javascript', src='/js/backend/leftNav.js')
-        script(type='text/javascript', src='/js/backend/index.js')
+        if(user.flag == 'rooter')
+            script(type='text/javascript', src='/js/backend/index.js')
+        else if(user.flag == 'admin')
+            script(type='text/javascript', src='/js/backend/adminindex.js')

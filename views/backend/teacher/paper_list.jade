@@ -1,0 +1,71 @@
+//
+   Created by HUI on 2016/11/10.
+extends home
+block admin-content
+    .content
+        input(id="page" style="display:none" name= total)
+        blockquote.layui-elem-quote.layui-quote-nm 出卷易-试题库
+        fieldset.ayui-elem-field.layui-field-title
+            legend 试卷库
+        form.layui-form.layui-form-pane
+            .layui-form-item
+                label.layui-form-label 科目
+                .layui-input-inline
+                    input.layui-input(id='subject' value= subject_default readonly='readonly')
+                label.layui-form-label 计算重复率
+                .layui-input-inline
+                    input.layui-input(id='a')
+                .layui-input-inline
+                    input.layui-input(id='b')
+                .layui-input-inline
+                    button.layui-btn(type='button' onclick='semblance()') 计算
+
+            .layui-field-box
+            each item,index in list
+                blockquote.layui-elem-quote.layui-quote-nm #{index+1}. #{item.subject+item.date1}
+                    a.qt-delete(href='/paper/'+'#{item._id}'+'/delete') 删除
+                    a.qt-detail(href='/download/'+'#{item.filename}') 下载
+            #demo1(style="text-align:center")
+block scripts
+    script.
+        var total_page = document.getElementById("page").name;
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage,
+                layer = layui.layer;
+
+            laypage({
+                cont: 'demo1',
+                pages: total_page,
+                groups: 10, //连续显示分页数
+                curr: function () { //通过url获取当前页，也可以同上（pages）方式获取
+                    var page = location.search.match(/page=(\d+)/);
+                    return page ? page[1] : 1;
+                }(),
+                jump: function (e, first) { //触发分页后的回调
+                    if (!first) { //一定要加此判断，否则初始时会无限刷新
+                        location.href = '?page=' + e.curr;
+                    }
+                }
+            });
+        })
+
+        function semblance() {
+            var paper={}
+            paper.a=$('#a').val()
+            paper.b=$('#b').val()
+            $.ajax({
+                url: '/api/semblance',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(paper),
+                beforeSend: function () {
+                },
+                success: function (data) {
+                    layer.alert('重复率:'+data.semblance)
+                },
+                error: function (data) {
+                    layer.alert(data.responseText)
+                }
+            })
+        }

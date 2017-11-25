@@ -1,0 +1,67 @@
+//
+   Created by HUI on 2016/11/22.
+extends home
+block admin-content
+    .content
+        input(id="page" style="display:none" name= total)
+        blockquote.layui-elem-quote.layui-quote-nm 出卷易-公开题库
+        fieldset.ayui-elem-field.layui-field-title
+            legend 试题库
+        form.layui-form.layui-form-pane
+            .layui-form-item
+                label.layui-form-label 科目
+                .layui-input-inline
+                    input.layui-input(id='subject' value= subject_default readonly='readonly')
+            .layui-form-item
+                label.layui-form-label 仅自己
+                .layui-input-block
+                    if(share === 0)
+                        input(type="checkbox" checked name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF" )
+                    else
+                        input(type="checkbox" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF" )
+            .layui-field-box
+            each item in list
+                blockquote.layui-elem-quote.layui-quote-nm
+                    span  [#{item.type}] #{item.question}
+                    a.qt-detail(id="#{item._id}" onclick="show_question(this)") 预览
+                    if((item.user_id).indexOf(user_id)===-1)
+                        a.qt-detail(id="#{item._id}" onclick='add(this)' style='right:50px') 加入题库
+                    else if((item.user_id).indexOf(user_id) === 0)
+                        a.qt-detail(id="#{item._id}" onclick='cancel(this)' style='right:50px') 取消共享
+                    else
+                        a.qt-detail(id="#{item._id}" onclick='remove(this)' style='right:50px') 取消加入
+
+            #demo1(style="text-align:center")
+block scripts
+    script(src='js/show_questions.js')
+    script.
+        var form = layui.form();
+        form.on('switch(switchTest)', function (data) {
+            if(this.checked){
+                window.location.href="/public-my?page=1"
+            }else{
+                window.location.href = "/public-bank?page=1"
+
+            }
+        });
+        var total_page = document.getElementById("page").name;
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage,
+                layer = layui.layer;
+
+            laypage({
+                cont: 'demo1',
+                pages: total_page,
+                groups: 10, //连续显示分页数
+                curr: function () { //通过url获取当前页，也可以同上（pages）方式获取
+                    var page = location.search.match(/page=(\d+)/);
+                    return page ? page[1] : 1;
+                }(),
+                jump: function (e, first) { //触发分页后的回调
+                    if (!first) { //一定要加此判断，否则初始时会无限刷新
+                        location.href = '?page=' + e.curr;
+                    }
+                }
+            });
+        })
+
