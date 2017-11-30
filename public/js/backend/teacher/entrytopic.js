@@ -59,7 +59,17 @@ layui.use(['layer', 'form', 'upload'], function () {
     });
 
     $('#createBtn').click(function () {
-        createQuestion();
+        //createQuestion();
+        console.log('刷新ui');
+        var appendChoose = $('<div class="choose"><label class="layui-form-label">选项</label><div class="layui-input-block"><input id="choose" class="layui-input"></div></div>');
+        appendChoose.css({
+            opacity:0,
+            height:0
+        });//这句加在append前
+
+        $('.choose:last').after(appendChoose);
+        appendChoose.animate({opacity:1,height:'38px'},500);//这句的作用是使DIV缓慢显示
+
     });
 
     $('#updateBtn').click(function () {

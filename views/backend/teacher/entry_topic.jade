@@ -31,6 +31,10 @@ block admin-content
                 label.layui-form-label 题目
                 .layui-input-block
                     textarea.layui-textarea(placeholder="请输入题目" id='question'  )  #{qInfo ? qInfo.question : ''}
+            .choose
+                label.layui-form-label 选项
+                .layui-input-block
+                    input.layui-input(id='choose_1')
             .layui-form-item
                 fieldset.layui-elem-field.layui-field-title(style='margin-top: 30px;')
                     legend 附件图片
